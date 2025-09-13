@@ -1,28 +1,32 @@
 {
-  "name": "google-address-functions",
+  "name": "@projectint/palirent_addresses",
   "version": "1.1.10",
-  "description": "google address helper functions ",
+  "private": false,
+  "description": "Address helper functions",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "yarn run babel src/ -d dist/",
     "prepublishOnly": "npm run build"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ProjectINT/google-address-functions.git"
+    "url": "git+https://github.com/ProjectINT/palirent_addresses.git"
   },
   "keywords": [
-    "google",
+    "addresses",
     "places",
     "helpers"
   ],
   "author": "Yuri Palienko",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ProjectINT/google-address-functions/issues"
+    "url": "https://github.com/ProjectINT/palirent_addresses/issues"
   },
-  "homepage": "https://github.com/ProjectINT/google-address-functions#readme",
+  "homepage": "https://github.com/ProjectINT/palirent_addresses#readme",
   "devDependencies": {
     "@babel/cli": "^7.20.7",
     "@babel/core": "^7.20.7",
