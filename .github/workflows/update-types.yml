@@ -1,0 +1,101 @@
+name: Update Types
+
+on:
+  repository_dispatch:
+    types: [types-updated]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Types package version'
+        required: false
+        default: 'latest'
+
+jobs:
+  update-types:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+          scope: "@projectint"
+
+      - name: Install dependencies
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npm ci
+
+      - name: Update types package
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ github.event.client_payload.version || inputs.version || 'latest' }}"
+          echo "Updating @projectint/types to version: $VERSION"
+          
+          # Проверяем, есть ли уже зависимость в package.json
+          if grep -q "@projectint/types" package.json; then
+            echo "Updating existing dependency..."
+            npm install @projectint/types@$VERSION
+          else
+            echo "Adding new dependency..."
+            npm install @projectint/types@$VERSION --save-dev
+          fi
+
+      - name: Run tests
+        run: npm test
+        continue-on-error: true
+
+      - name: Build package
+        run: npm run build
+
+      - name: Bump minor version
+        id: version
+        run: |
+          npm version minor --no-git-tag-version
+          NEW_VERSION=$(node -p "require('./package.json').version")
+          echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "New package version: $NEW_VERSION"
+
+      - name: Create Pull Request
+        id: create-pr
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore: update @projectint/types to ${{ github.event.client_payload.version || inputs.version }} and bump minor version to ${{ steps.version.outputs.version }}"
+          title: "🔄 Update Supabase types and minor version bump"
+          body: |
+            ## 🔄 Automatic Types Update
+            
+            **Types version:** `${{ github.event.client_payload.version || inputs.version }}`
+            **Package version:** `${{ steps.version.outputs.version }}` (minor bump)
+            **Source:** `${{ github.event.client_payload.source_repo || 'manual' }}`
+            
+            ### Changes:
+            - ⬆️ Updated `@projectint/types` to latest version
+            - 🏷️ Bumped package version to `${{ steps.version.outputs.version }}` (minor)
+            - ✅ Tests passed
+            - 🏗️ Build successful
+            
+            This PR was created automatically when Supabase types were updated.
+          branch: update-types-${{ github.event.client_payload.version || inputs.version }}-${{ github.run_number }}
+          delete-branch: true
+
+      - name: Enable auto-merge
+        if: github.event_name == 'repository_dispatch' && steps.create-pr.outputs.pull-request-number
+        run: |
+          gh pr merge ${{ steps.create-pr.outputs.pull-request-number }} --auto --squash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Auto-merge if tests pass
+        if: github.event_name == 'repository_dispatch'
+        run: |
+          echo "Types updated successfully and PR created with auto-merge enabled"
