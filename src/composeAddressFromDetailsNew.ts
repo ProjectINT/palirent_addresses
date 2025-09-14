@@ -1,32 +1,36 @@
-// @flow strict
-const { getPlaceName, getAddressComponentByTypeNew } = require('./helpers');
+import { getPlaceName, getAddressComponentByTypeNew } from './helpers';
+import { Address, AddressComponentNew } from './types';
 
-
-type ComposeAddressFromDetailsNewArg = {|
-  addressComponents: Array<AddressComponentNew>,
-  location: { latitude: number, longitude: number },
-  id: string, // placeId
-  formattedAddress: string,
-  types: Array<string>,
+interface ComposeAddressFromDetailsNewArg {
+  addressComponents: AddressComponentNew[];
+  location: { latitude: number; longitude: number };
+  id: string; // placeId
+  formattedAddress: string;
+  types: string[];
   displayName: {
-    text: string,
-    languageCode: string,
-  },
-|}
+    text: string;
+    languageCode: string;
+  };
+}
 
-module.exports.composeAddressFromDetailsNew = ({
-  addressComponents, location, id, formattedAddress, types, displayName,
+export const composeAddressFromDetailsNew = ({
+  addressComponents, 
+  location, 
+  id, 
+  formattedAddress, 
+  types, 
+  displayName,
 }: ComposeAddressFromDetailsNewArg): Address => {
   const country = getAddressComponentByTypeNew(addressComponents, 'country');
-  const state = getAddressComponentByTypeNew(addressComponents, 'administrative_area_level_1') || getAddressComponentByTypeNew(addressComponents, 'administrative_area_level_2');
+  const state = getAddressComponentByTypeNew(addressComponents, 'administrative_area_level_1') || 
+                getAddressComponentByTypeNew(addressComponents, 'administrative_area_level_2');
   const city = getAddressComponentByTypeNew(addressComponents, 'locality');
   const street = getAddressComponentByTypeNew(addressComponents, 'route');
   const number = getAddressComponentByTypeNew(addressComponents, 'street_number');
   const zipCode = getAddressComponentByTypeNew(addressComponents, 'postal_code');
 
-  let coordinates = null;
+  let coordinates: number[] | null = null;
 
-  // $FlowFixMe[unnecessary-optional-chain]
   if (location?.latitude && location.longitude) {
     coordinates = [location.latitude, location.longitude];
   }
@@ -43,4 +47,4 @@ module.exports.composeAddressFromDetailsNew = ({
     addressNote: '',
     coordinates,
   };
-}
+};

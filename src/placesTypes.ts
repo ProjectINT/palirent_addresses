@@ -1,5 +1,4 @@
-// @flow strict
-module.exports.placesTypes = [
+export const placesTypes: string[] = [
   'accounting',
   'airport',
   'amusement_park',

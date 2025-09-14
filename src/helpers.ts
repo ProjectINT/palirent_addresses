@@ -1,12 +1,12 @@
-// @flow strict
-const { placesTypes } = require('./placesTypes');
+import { placesTypes } from './placesTypes';
+import { AddressComponent, AddressComponentNew } from './types';
 
-type PlaceNameArg = {|
-  placeTypes: Array<string>,
-  displayName: string,  
-|};
+interface PlaceNameArg {
+  placeTypes: string[];
+  displayName: string;
+}
 
-module.exports.getPlaceName = ({placeTypes, displayName}: PlaceNameArg): string => {
+export const getPlaceName = ({ placeTypes, displayName }: PlaceNameArg): string => {
   if (!Array.isArray(placeTypes)) return '';
 
   for (const placeType of placeTypes) {
@@ -17,7 +17,7 @@ module.exports.getPlaceName = ({placeTypes, displayName}: PlaceNameArg): string 
   return '';
 };
 
-module.exports.getAddressComponentByType = (components: Array<AddressComponent>, type: string): string => {
+export const getAddressComponentByType = (components: AddressComponent[], type: string): string => {
   if (!Array.isArray(components)) return '';
 
   const component = components.find(({ types }) => types.includes(type));
@@ -34,7 +34,7 @@ module.exports.getAddressComponentByType = (components: Array<AddressComponent>,
   return '';
 };
 
-module.exports.getAddressComponentByTypeNew = (components: Array<AddressComponentNew>, type: string): string => {
+export const getAddressComponentByTypeNew = (components: AddressComponentNew[], type: string): string => {
   if (!Array.isArray(components)) return '';
 
   const component = components.find(({ types }) => types.includes(type));
@@ -51,7 +51,7 @@ module.exports.getAddressComponentByTypeNew = (components: Array<AddressComponen
   return '';
 };
 
-module.exports.v4 = (): string => {
+export const v4 = (): string => {
   let d = new Date().getTime();
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
       const r = (d + Math.random() * 16) % 16 | 0;

@@ -1,0 +1,10 @@
+src/
+tsconfig.json
+.git/
+.gitignore
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+yarn.lock
+.npmrc
