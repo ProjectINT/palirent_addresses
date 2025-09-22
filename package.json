@@ -11,6 +11,7 @@
     "test:ui": "vitest --ui",
     "test:coverage": "vitest run --coverage",
     "test:2gis": "ts-node test-integration/simple-twogis-test.ts",
+    "test:google": "ts-node test-integration/simple-google-test.ts",
     "build": "tsc",
     "dev": "tsc --watch",
     "prepublishOnly": "npm run build"

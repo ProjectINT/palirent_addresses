@@ -23,7 +23,7 @@ async function testTwoGis() {
     
     // Записываем подсказки на диск
     await fs.writeFile(
-      './test-results/suggestions.json', 
+      './test-results/suggestions.json',
       JSON.stringify(suggestions, null, 2)
     );
     console.log(`✅ Получено ${suggestions.length} подсказок, сохранено в suggestions.json`);
