@@ -61,7 +61,6 @@ const placeDetails = await googleAutocomplete.getPlaceDetails('place-id');
 ```typescript
 import { 
   createAddressAutocomplete,
-  createAddressProvider,
   // Types
   ProviderType,
   ProviderConfig,
@@ -80,7 +79,7 @@ const autocomplete = createAddressAutocomplete({
 
 // Get suggestions
 const suggestions = await autocomplete.getSuggestions('query');
-// Returns: [{ formattedAddress: string, place_id: string }]
+// Returns: SuggestionOption[]
 
 // Get place details
 const details = await autocomplete.getPlaceDetails('place-id');
@@ -217,11 +216,41 @@ const api = createAddressAutocomplete({
 
 ## Examples
 
-See [EXAMPLES.md](./EXAMPLES.md) for detailed usage examples including:
-- Provider switching
-- Error handling
-- Economic usage patterns
-- Advanced configurations
+Detailed usage examples:
+
+### Switching between providers
+```typescript
+const config = {
+  apiKey: process.env.API_KEY!,
+  languageCode: 'ru' as const,
+  searchLength: 10
+};
+
+// Use Google for global coverage
+const google = createAddressAutocomplete({
+  provider: 'google',
+  ...config
+});
+
+// Use 2GIS for CIS regions (more economical)
+const twogis = createAddressAutocomplete({
+  provider: 'twogis',
+  ...config
+});
+```
+
+### Error handling
+```typescript
+try {
+  const suggestions = await autocomplete.getSuggestions('query');
+  if (suggestions.length > 0) {
+    const details = await autocomplete.getPlaceDetails(suggestions[0].place_id);
+    console.log(details);
+  }
+} catch (error) {
+  console.error('Address lookup failed:', error);
+}
+```
 
 ## Development
 
