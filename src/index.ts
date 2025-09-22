@@ -1,7 +1,13 @@
 export { composeAddressFromDetails } from './composeAddressFromDetails';
 export { placesTypes } from './placesTypes';
-export { placesAutocomplete } from './placesAutocomplete';
 export { getPlaceName, getAddressComponentByType, v4 } from './helpers';
+
+export { placesAutocomplete } from './placesAutocomplete'; // это нужно экспортировать, остальные функции - внутренние.
+
+// Новый универсальный API для работы с разными провайдерами
+export { createAddressAutocomplete } from './addressAutocomplete';
+export { createAddressProvider } from './providers';
+export type { ProviderType, ProviderConfig } from './providers';
 
 // Re-export types
 export type {
@@ -13,3 +19,13 @@ export type {
   Place,
   ComposeAddressParams,
 } from './types';
+
+export type {
+  AddressProvider,
+  BaseProviderConfig,
+  SuggestionOption,
+  PlaceDetailsWithOriginLocale,
+  LanguageCode
+} from './providers/base';
+
+export type { AddressAutocompleteConfig, AddressAutocompleteFunctions } from './addressAutocomplete';
