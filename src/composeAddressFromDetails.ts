@@ -33,9 +33,8 @@ export const composeAddressFromDetails = ({
       zip_code: zipCode,
     },
     translations: {
-      id: '', // будет генерироваться базой данных
-      address_id: id, // связываем с адресом
-      locale: displayName.languageCode as any, // приводим к типу locale из enum
+      address_id: id,
+      locale: displayName.languageCode as any,
       formatted_address: formattedAddress || `${getPlaceName({ placeTypes: types, displayName: displayName.text })}`,
       country: country || '',
       state: state,

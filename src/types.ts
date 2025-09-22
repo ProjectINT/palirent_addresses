@@ -1,7 +1,10 @@
 import { Database } from '@projectint/types'
 
+/*
+  Опущены поля которые будут заполняться базой данных (created_at, updated_at, id в AddressTranslations)
+*/
 export type Address = Omit<Database['public']['Tables']['addresses']['Row'], 'created_at' | 'updated_at'>;
-export type AddressTranslations = Omit<Database['public']['Tables']['address_translations']['Row'], 'created_at' | 'updated_at'>;
+export type AddressTranslations = Omit<Database['public']['Tables']['address_translations']['Row'], 'created_at' | 'updated_at' | 'id'>;
 
 export type ReturnAddressObject = {
   address: Address;
