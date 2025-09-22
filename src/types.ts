@@ -3,6 +3,11 @@ import { Database } from '@projectint/types'
 export type Address = Omit<Database['public']['Tables']['addresses']['Row'], 'created_at' | 'updated_at'>;
 export type AddressTranslations = Omit<Database['public']['Tables']['address_translations']['Row'], 'created_at' | 'updated_at'>;
 
+export type ReturnAddressObject = {
+  address: Address;
+  translations: AddressTranslations;
+}
+
 export interface PlacePrediction {
   text: {
     text: string;

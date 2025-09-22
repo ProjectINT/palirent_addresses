@@ -1,6 +1,6 @@
 import { composeAddressFromDetails } from './composeAddressFromDetails';
 import { v4 } from './helpers';
-import { PlacePrediction, Address } from './types';
+import { PlacePrediction, ReturnAddressObject } from './types';
 
 const SUGGESTIONS_ENDPOINT = 'https://places.googleapis.com/v1/places:autocomplete';
 const DETAILS_ENDPOINT = 'https://places.googleapis.com/v1/places';
@@ -11,8 +11,8 @@ interface SuggestionOption {
 }
 
 interface PlaceDetailsWithOriginLocale {
-  origin: Address;
-  localized: Address;
+  origin: ReturnAddressObject;
+  localized: ReturnAddressObject;
 }
 
 type LanguageCode = 
@@ -28,7 +28,7 @@ interface PlacesAutocompleteProps {
 
 interface PlacesFunctions {
   getSuggestions: (actualQuery: string) => Promise<SuggestionOption[]>;
-  getPlaceDetails: (placeId: string) => Promise<Address>;
+  getPlaceDetails: (placeId: string) => Promise<ReturnAddressObject>;
   getPlaceDetailsWithOriginLocale: (placeId: string) => Promise<PlaceDetailsWithOriginLocale>;
 }
 
@@ -104,7 +104,7 @@ export function placesAutocomplete({ googleApiKey, searchLength, languageCode = 
       return resultSuggestions;
     },
 
-    async getPlaceDetails(placeId: string): Promise<Address> {
+    async getPlaceDetails(placeId: string): Promise<ReturnAddressObject> {
       const response = await fetchPlaceDetails({
         placeId,
         sessionToken,

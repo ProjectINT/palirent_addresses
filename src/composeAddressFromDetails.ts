@@ -1,10 +1,5 @@
 import { getPlaceName, getAddressComponentByType } from './helpers';
-import { Address, AddressTranslations, ComposeAddressParams } from './types';
-
-type ComposeAddressResult = {
-  address: Address;
-  translations: AddressTranslations;
-}
+import { Address, AddressTranslations, ComposeAddressParams, ReturnAddressObject } from './types';
 
 export const composeAddressFromDetails = ({
   addressComponents, 
@@ -13,7 +8,7 @@ export const composeAddressFromDetails = ({
   formattedAddress, 
   types, 
   displayName,
-}: ComposeAddressParams): ComposeAddressResult => {
+}: ComposeAddressParams): ReturnAddressObject => {
   const country =  getAddressComponentByType(addressComponents, 'country');
   const state   =  getAddressComponentByType(addressComponents, 'administrative_area_level_1') || 
     getAddressComponentByType(addressComponents, 'administrative_area_level_2');

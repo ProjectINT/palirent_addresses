@@ -7,6 +7,7 @@ export { getPlaceName, getAddressComponentByType, v4 } from './helpers';
 export type {
   Address,
   AddressTranslations,
+  ReturnAddressObject,
   PlacePrediction,
   AddressComponent,
   Place,
