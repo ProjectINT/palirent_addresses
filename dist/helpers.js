@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.v4 = exports.getAddressComponentByTypeNew = exports.getAddressComponentByType = exports.getPlaceName = void 0;
+exports.v4 = exports.getAddressComponentByType = exports.getPlaceName = void 0;
 const placesTypes_1 = require("./placesTypes");
 const getPlaceName = ({ placeTypes, displayName }) => {
     if (!Array.isArray(placeTypes))
@@ -18,22 +18,6 @@ const getAddressComponentByType = (components, type) => {
         return '';
     const component = components.find(({ types }) => types.includes(type));
     if (component) {
-        if (component.long_name) {
-            return component.long_name;
-        }
-        if (component.short_name) {
-            return component.short_name;
-        }
-        return '';
-    }
-    return '';
-};
-exports.getAddressComponentByType = getAddressComponentByType;
-const getAddressComponentByTypeNew = (components, type) => {
-    if (!Array.isArray(components))
-        return '';
-    const component = components.find(({ types }) => types.includes(type));
-    if (component) {
         if (component.longText) {
             return component.longText;
         }
@@ -44,7 +28,7 @@ const getAddressComponentByTypeNew = (components, type) => {
     }
     return '';
 };
-exports.getAddressComponentByTypeNew = getAddressComponentByTypeNew;
+exports.getAddressComponentByType = getAddressComponentByType;
 const v4 = () => {
     let d = new Date().getTime();
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {

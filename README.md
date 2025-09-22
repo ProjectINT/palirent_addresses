@@ -12,22 +12,14 @@ npm install @projectint/palirent_addresses
 
 ```typescript
 import { 
-  getPlaceDetails, 
-  placesAutocompleteNew, 
+  placesAutocomplete, 
   composeAddressFromDetails,
   Address,
   PlacePrediction 
 } from '@projectint/palirent_addresses';
 
-// Example usage with Google Places API
-const address: Address = await getPlaceDetails({
-  placeId: 'ChIJN1t_tDeuEmsRUsoyG83frY4',
-  placesService: googlePlacesService,
-  PlacesServiceStatus: google.maps.places.PlacesServiceStatus
-});
-
-// Example usage with Places Autocomplete New API
-const placesApi = placesAutocompleteNew({
+// Example usage with Places Autocomplete API
+const placesApi = placesAutocomplete({
   googleApiKey: 'your-api-key',
   searchLength: 5,
   languageCode: 'en'
@@ -51,10 +43,8 @@ This package exports comprehensive TypeScript types:
 
 ### Functions
 
-- `getPlaceDetails()` - Get place details from Google Places API
 - `composeAddressFromDetails()` - Compose address from place details
-- `composeAddressFromDetailsNew()` - Compose address from new API format
-- `placesAutocompleteNew()` - Places autocomplete with new API
+- `placesAutocomplete()` - Places autocomplete with new API
 - `getPlaceName()` - Extract place name from place types
 - `getAddressComponentByType()` - Get address component by type
 - `v4()` - Generate UUID v4

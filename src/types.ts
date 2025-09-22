@@ -20,74 +20,33 @@ export interface PlacePrediction {
 
 export interface AddressComponent {
   types: string[];
-  long_name: string;
-  short_name: string;
-}
-
-export interface AddressComponentNew {
-  types: string[];
   longText: string;
   shortText: string;
 }
 
-export interface GoogleMapsLocation {
-  lat(): number;
-  lng(): number;
-}
-
-export interface GoogleMapsViewport {
-  northeast: { lat: number; lng: number };
-  southwest: { lat: number; lng: number };
-}
-
 export interface Place {
-  address_components: AddressComponent[];
-  formatted_address?: string;
-  geometry?: {
-    location: GoogleMapsLocation;
-    viewport: GoogleMapsViewport;
+  addressComponents: AddressComponent[];
+  formattedAddress?: string;
+  location?: {
+    latitude: number;
+    longitude: number;
   };
-  name: string;
+  displayName: {
+    text: string;
+    languageCode: string;
+  };
   types: string[];
-}
-
-export type PlaceDetailsStatus = 
-  | 'OK' 
-  | 'ZERO_RESULTS' 
-  | 'NOT_FOUND' 
-  | 'INVALID_REQUEST' 
-  | 'OVER_QUERY_LIMIT' 
-  | 'REQUEST_DENIED' 
-  | 'UNKNOWN_ERROR';
-
-export interface PlaceDetails {
-  html_attributions: string[];
-  result: Place;
-  status: PlaceDetailsStatus;
-}
-
-// Google Maps API types (simplified)
-export interface GoogleMapsPlacesService {
-  getDetails(request: any, callback: (result: Place | null, status: any) => void): void;
-}
-
-export interface GoogleMapsPlacesServiceStatus {
-  OK: string;
-  ZERO_RESULTS: string;
-  NOT_FOUND: string;
-  INVALID_REQUEST: string;
-  OVER_QUERY_LIMIT: string;
-  REQUEST_DENIED: string;
-  UNKNOWN_ERROR: string;
-}
-
-export interface GetPlaceDetailsParams {
-  placeId: string;
-  placesService: GoogleMapsPlacesService;
-  PlacesServiceStatus: GoogleMapsPlacesServiceStatus;
+  id: string;
 }
 
 export interface ComposeAddressParams {
-  result: Place;
-  placeId: string;
+  addressComponents: AddressComponent[];
+  location: { latitude: number; longitude: number };
+  id: string; // placeId
+  formattedAddress: string;
+  types: string[];
+  displayName: {
+    text: string;
+    languageCode: string;
+  };
 }

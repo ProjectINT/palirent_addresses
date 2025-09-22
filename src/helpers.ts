@@ -1,5 +1,5 @@
 import { placesTypes } from './placesTypes';
-import { AddressComponent, AddressComponentNew } from './types';
+import { AddressComponent } from './types';
 
 interface PlaceNameArg {
   placeTypes: string[];
@@ -18,23 +18,6 @@ export const getPlaceName = ({ placeTypes, displayName }: PlaceNameArg): string 
 };
 
 export const getAddressComponentByType = (components: AddressComponent[], type: string): string => {
-  if (!Array.isArray(components)) return '';
-
-  const component = components.find(({ types }) => types.includes(type));
-  
-  if (component) {
-    if (component.long_name) {
-      return component.long_name;
-    }
-    if (component.short_name) {
-      return component.short_name;
-    }
-    return '';
-  }
-  return '';
-};
-
-export const getAddressComponentByTypeNew = (components: AddressComponentNew[], type: string): string => {
   if (!Array.isArray(components)) return '';
 
   const component = components.find(({ types }) => types.includes(type));

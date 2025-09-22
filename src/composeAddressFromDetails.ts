@@ -1,11 +1,14 @@
-import { placesTypes } from './placesTypes';
 import { getPlaceName, getAddressComponentByType } from './helpers';
-import { Address, ComposeAddressParams } from './types';
+import { Address, AddressComponent, ComposeAddressParams } from './types';
 
-export const composeAddressFromDetails = ({ result, placeId }: ComposeAddressParams): Address => {
-  const { address_components: addressComponents, geometry } = result;
-
-  // https://developers.google.com/maps/documentation/geocoding/start#Types
+export const composeAddressFromDetails = ({
+  addressComponents, 
+  location, 
+  id, 
+  formattedAddress, 
+  types, 
+  displayName,
+}: ComposeAddressParams): Address => {
   const country = getAddressComponentByType(addressComponents, 'country');
   const state = getAddressComponentByType(addressComponents, 'administrative_area_level_1') || 
                 getAddressComponentByType(addressComponents, 'administrative_area_level_2');
@@ -16,19 +19,19 @@ export const composeAddressFromDetails = ({ result, placeId }: ComposeAddressPar
 
   let coordinates: number[] | null = null;
 
-  if (geometry?.location && typeof geometry.location.lat === 'function' && typeof geometry.location.lng === 'function') {
-    coordinates = [geometry.location.lat(), geometry.location.lng()];
+  if (location?.latitude && location.longitude) {
+    coordinates = [location.latitude, location.longitude];
   }
 
   return {
-    id: placeId,
+    id,
     country,
     state,
     city,
     street,
     number,
     zipCode,
-    formattedAddress: `${getPlaceName({ placeTypes: result.types, displayName: result.name })}${result.formatted_address || ''}`,
+    formattedAddress: `${getPlaceName({ placeTypes: types, displayName: displayName.text })}${formattedAddress || ''}`,
     addressNote: '',
     coordinates,
   };

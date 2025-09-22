@@ -1,4 +1,4 @@
-import { composeAddressFromDetailsNew } from './composeAddressFromDetailsNew';
+import { composeAddressFromDetails } from './composeAddressFromDetails';
 import { v4 } from './helpers';
 import { Address, PlacePrediction } from './types';
 
@@ -69,7 +69,7 @@ async function fetchPlaceDetails({ placeId, sessionToken, languageCode, googleAp
   });
 }
 
-export function placesAutocompleteNew({ googleApiKey, searchLength, languageCode = 'en' }: PlacesAutocompleteProps): PlacesFunctions {
+export function placesAutocomplete({ googleApiKey, searchLength, languageCode = 'en' }: PlacesAutocompleteProps): PlacesFunctions {
   const formatSuggestions = (response: Array<{ placePrediction: PlacePrediction }>): SuggestionOption[] => {
     const formatPrediction = (prediction: PlacePrediction): SuggestionOption => ({
       formattedAddress: prediction.text.text,
@@ -116,7 +116,7 @@ export function placesAutocompleteNew({ googleApiKey, searchLength, languageCode
       
       sessionToken = v4();
 
-      return composeAddressFromDetailsNew(data);
+      return composeAddressFromDetails(data);
     },
 
     async getPlaceDetailsWithOriginLocale(placeId: string): Promise<PlaceDetailsWithOriginLocale> {
@@ -147,8 +147,8 @@ export function placesAutocompleteNew({ googleApiKey, searchLength, languageCode
       sessionToken = v4();
 
       return {
-        origin: composeAddressFromDetailsNew(data[0]),
-        localized: composeAddressFromDetailsNew(data[1]),
+        origin: composeAddressFromDetails(data[0]),
+        localized: composeAddressFromDetails(data[1]),
       };
     }
   };
