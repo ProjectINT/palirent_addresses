@@ -14,8 +14,18 @@ npm install @projectint/palirent_addresses
 import { 
   placesAutocomplete, 
   composeAddressFromDetails,
+  placesTypes,
+  getPlaceName,
+  getAddressComponentByType,
+  v4,
+  // Types
   Address,
-  PlacePrediction 
+  AddressTranslations,
+  ReturnAddressObject,
+  PlacePrediction,
+  AddressComponent,
+  Place,
+  ComposeAddressParams
 } from '@projectint/palirent_addresses';
 
 // Example usage with Places Autocomplete API
@@ -25,28 +35,56 @@ const placesApi = placesAutocomplete({
   languageCode: 'en'
 });
 
+// Get autocomplete suggestions
 const suggestions = await placesApi.getSuggestions('New York');
-const placeDetails = await placesApi.getPlaceDetails('place-id');
+// Returns: [{ formattedAddress: string, place_id: string }, ...]
+
+// Get place details and compose address
+const addressData = await placesApi.getPlaceDetails('place-id');
+// Returns: ReturnAddressObject with address and translations
+
+// Get place details with both origin (en) and localized versions
+const detailsWithLocales = await placesApi.getPlaceDetailsWithOriginLocale('place-id');
+// Returns: { origin: ReturnAddressObject, localized: ReturnAddressObject }
+
+// Or compose address from raw place details
+const addressData: ReturnAddressObject = composeAddressFromDetails({
+  addressComponents: rawPlaceData.addressComponents,
+  location: rawPlaceData.location,
+  id: rawPlaceData.id,
+  formattedAddress: rawPlaceData.formattedAddress,
+  types: rawPlaceData.types,
+  displayName: rawPlaceData.displayName,
+});
+
+// Result contains language-independent address data and translations
+const { address, translations } = addressData;
 ```
 
 ## Types
 
 This package exports comprehensive TypeScript types:
 
-- `Address` - Main address interface
+- `Address` - Language-independent address data (coordinates, number, zip code)
+- `AddressTranslations` - Localized address components (country, state, city, street)
+- `ReturnAddressObject` - Return type of composeAddressFromDetails function
+- `ComposeAddressParams` - Parameters for composeAddressFromDetails function
 - `PlacePrediction` - Place prediction from autocomplete
 - `AddressComponent` - Address component structure
 - `Place` - Google Places API place object
-- And many more...
 
 ## API Reference
 
 ### Functions
 
-- `composeAddressFromDetails()` - Compose address from place details
-- `placesAutocomplete()` - Places autocomplete with new API
-- `getPlaceName()` - Extract place name from place types
-- `getAddressComponentByType()` - Get address component by type
+- `placesAutocomplete(config)` - Returns object with methods for Google Places API:
+  - `getSuggestions(query)` - Get autocomplete suggestions
+  - `getPlaceDetails(placeId)` - Get place details as ReturnAddressObject
+  - `getPlaceDetailsWithOriginLocale(placeId)` - Get place details in both English and specified locale
+- `composeAddressFromDetails(params)` - Compose address object with language-independent data and translations from raw place details
+- `placesTypes` - Object containing place type constants
+- `getPlaceName(options)` - Extract place name from place types
+- `getAddressComponentByType(components, type)` - Get address component by type
 - `v4()` - Generate UUID v4
 
 ## Development
