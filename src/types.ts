@@ -1,15 +1,7 @@
-export interface Address {
-  id: string;
-  city: string;
-  country: string;
-  formattedAddress: string;
-  addressNote?: string | null;
-  number?: string | null;
-  state?: string | null;
-  street?: string | null;
-  zipCode?: string | null;
-  coordinates?: number[] | null;
-}
+import { Database } from '@projectint/types'
+
+export type Address = Omit<Database['public']['Tables']['addresses']['Row'], 'created_at' | 'updated_at'>;
+export type AddressTranslations = Omit<Database['public']['Tables']['address_translations']['Row'], 'created_at' | 'updated_at'>;
 
 export interface PlacePrediction {
   text: {

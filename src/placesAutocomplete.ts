@@ -1,6 +1,6 @@
 import { composeAddressFromDetails } from './composeAddressFromDetails';
 import { v4 } from './helpers';
-import { Address, PlacePrediction } from './types';
+import { PlacePrediction, Address } from './types';
 
 const SUGGESTIONS_ENDPOINT = 'https://places.googleapis.com/v1/places:autocomplete';
 const DETAILS_ENDPOINT = 'https://places.googleapis.com/v1/places';
