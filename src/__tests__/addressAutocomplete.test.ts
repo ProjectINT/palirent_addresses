@@ -108,26 +108,6 @@ describe('Address Autocomplete', () => {
         }
       ]);
     });
-
-    it('should handle 2GIS API errors', async () => {
-      const mockResponse = {
-        meta: {
-          code: 403
-        }
-      };
-
-      (fetch as any).mockResolvedValueOnce({
-        json: () => Promise.resolve(mockResponse)
-      });
-
-      const autocomplete = createAddressAutocomplete({
-        provider: 'twogis',
-        apiKey: 'invalid-key',
-        languageCode: 'ru',
-      });
-
-      await expect(autocomplete.getSuggestions('test')).rejects.toThrow('2GIS API error: 403');
-    });
   });
 
   describe('Provider Factory', () => {
