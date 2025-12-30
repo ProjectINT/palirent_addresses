@@ -1,5 +1,5 @@
 import { getPlaceName, getAddressComponentByType } from './helpers';
-import { Address, AddressTranslations, ComposeAddressParams, ReturnAddressObject } from './types';
+import { ComposeAddressParams, ReturnAddressObject } from './types';
 
 export const composeAddressFromDetails = ({
   addressComponents, 
