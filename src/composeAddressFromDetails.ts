@@ -26,7 +26,6 @@ export const composeAddressFromDetails = ({
   return {
     address: {
       id,
-      account_id: null,
       address_note: null,
       coordinates: coordinates,
       number: number,

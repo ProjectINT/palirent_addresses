@@ -175,10 +175,10 @@
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.29.tgz"
   integrity sha512-wwQAWhWSuHaag8c4q/KN/vCoeOJYshAIvMQwD4GpSb3OiZklFfvAgmj0VCBBImRpuF/aFgIRzllXlVX93Jevww==
 
-"@projectint/types@^1.0.2":
-  version "1.0.2"
-  resolved "https://npm.pkg.github.com/download/@projectint/types/1.0.2/4bca6ff1fa6baa6a08f90ad04343a36d577f41c6"
-  integrity sha512-Xvjg4pTVyrQiOmHKbX/bKWhtkdIkwb1L7Bg8gv1jgfv3pQpHzmWBKElE2tY1hx25iw7RimPU8gFpPTtmuTWE7g==
+"@projectint/types@^1.5.6":
+  version "1.5.6"
+  resolved "https://npm.pkg.github.com/download/@projectint/types/1.5.6/29bf79fd4112c4c88b862157e6c908a42d4c951a"
+  integrity sha512-cRgOCzl7voPNP9RSC/I41v9QSWjtB/2uKhDH2csoftaQR2Ic/q7S1HtidK3poVo/oKqWJQhX5qYqk3mQVv9ydg==
 
 "@rollup/rollup-android-arm-eabi@4.50.1":
   version "4.50.1"
